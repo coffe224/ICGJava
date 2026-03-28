@@ -38,8 +38,6 @@ public class CanvasPanel extends JPanel implements PropertyChangeListener {
             @Override
             public void componentResized(ComponentEvent e) {
                 controller.handleResize(getWidth(), getHeight());
-                // по-другому
-                // setPreferredSize(new Dimension(getWidth(), getHeight()));
             }
         });
     }

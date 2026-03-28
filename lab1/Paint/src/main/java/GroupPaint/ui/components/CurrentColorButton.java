@@ -7,7 +7,7 @@ import java.beans.PropertyChangeListener;
 
 public class CurrentColorButton extends JButton implements PropertyChangeListener {
     public CurrentColorButton() {
-        setBackground(Color.BLUE);
+        setBackground(Color.BLACK);
         setEnabled(false);
         setText("   ");
     }

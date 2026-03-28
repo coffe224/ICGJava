@@ -7,10 +7,6 @@ import java.util.List;
 public class LineTool extends BresenhamLineAlgorithm implements PaintTool {
     private final int thickness;
 
-    public LineTool() {
-        this(1);
-    }
-
     public LineTool(int thickness) {
         this.thickness = thickness;
     }
@@ -20,8 +16,6 @@ public class LineTool extends BresenhamLineAlgorithm implements PaintTool {
     }
 
     public void draw(BufferedImage canvas, Color color, List<Point> points) {
-        // добавить обработку исключений
-
         Point p1 = points.get(0);
         Point p2 = points.get(1);
 

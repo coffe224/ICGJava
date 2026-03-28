@@ -9,7 +9,6 @@ public class LineParametersSelector extends JDialog {
 
     private EditBoxSliderPanel thicknessPanel;
     private boolean confirmed = false;
-    private int thickness;
 
     public LineParametersSelector(Frame parent) {
         super(parent, "Line Parameters", true);

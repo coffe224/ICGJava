@@ -10,7 +10,7 @@ public class ColorSelector extends JDialog {
     private boolean confirmed = false;
 
     public ColorSelector(Frame owner, Color initialColor) {
-        super(owner, "Select Color", true); // Modal dialog
+        super(owner, "Select Color", true);
 
         initComponents(initialColor);
         pack();
@@ -20,11 +20,9 @@ public class ColorSelector extends JDialog {
     private void initComponents(Color initialColor) {
         setLayout(new BorderLayout());
 
-        // Create color chooser
         colorChooser = new JColorChooser(initialColor != null ? initialColor : Color.WHITE);
         add(colorChooser, BorderLayout.CENTER);
 
-        // Create button panel
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 
@@ -42,14 +40,12 @@ public class ColorSelector extends JDialog {
             dispose();
         });
 
-        // Set default button (Enter key triggers OK)
         getRootPane().setDefaultButton(okButton);
 
         buttonPanel.add(okButton);
         buttonPanel.add(cancelButton);
         add(buttonPanel, BorderLayout.SOUTH);
 
-        // Set dialog size
         setSize(500, 450);
     }
 

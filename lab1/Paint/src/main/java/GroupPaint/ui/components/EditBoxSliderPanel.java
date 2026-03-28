@@ -20,12 +20,10 @@ public class EditBoxSliderPanel extends JPanel {
         setLayout(new BorderLayout(5, 5));
         setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
-        // 1. Initialize Text Field
         textField = new JTextField(String.valueOf(initialValue), 5);
         textField.setHorizontalAlignment(SwingConstants.CENTER);
         ((AbstractDocument) textField.getDocument()).setDocumentFilter(new IntegerFilter());
 
-        // Add listener to update slider when text changes (on Enter or Focus Lost)
         textField.addActionListener(e -> syncSliderFromText());
         textField.addFocusListener(new java.awt.event.FocusAdapter() {
             @Override
@@ -34,16 +32,11 @@ public class EditBoxSliderPanel extends JPanel {
             }
         });
 
-        // 2. Initialize Slider
         slider = new JSlider(min, max, initialValue);
         slider.setMajorTickSpacing((max - min) / 5); // Auto-calculate ticks
         slider.setMinorTickSpacing(1);
         slider.setPaintTicks(true);
-//        slider.setPaintLabels(true);
 
-        // 3. Synchronization Logic
-
-        // Slider -> Text
         slider.addChangeListener(e -> {
             if (!textField.hasFocus()) {
                 textField.setText(String.valueOf(slider.getValue()));
@@ -51,8 +44,6 @@ public class EditBoxSliderPanel extends JPanel {
             }
         });
 
-        // Add components to panel
-        // Putting text field in North, Slider in Center creates a vertical stack
         add(textField, BorderLayout.NORTH);
         add(slider, BorderLayout.CENTER);
     }
@@ -63,7 +54,6 @@ public class EditBoxSliderPanel extends JPanel {
             if (text.isEmpty()) return;
             int value = Integer.parseInt(text);
 
-            // Clamp value
             int min = slider.getMinimum();
             int max = slider.getMaximum();
             if (value < min) value = min;
@@ -73,12 +63,9 @@ public class EditBoxSliderPanel extends JPanel {
             textField.setText(String.valueOf(value));
             fireStateChanged();
         } catch (NumberFormatException ex) {
-            // Revert to current slider value if invalid input
             textField.setText(String.valueOf(slider.getValue()));
         }
     }
-
-    // --- Public API for External Use ---
 
     public int getValue() {
         return slider.getValue();
@@ -92,7 +79,6 @@ public class EditBoxSliderPanel extends JPanel {
     public void setRange(int min, int max) {
         slider.setMinimum(min);
         slider.setMaximum(max);
-        // Re-calculate ticks
         slider.setMajorTickSpacing((max - min) / 5);
     }
 
@@ -111,7 +97,6 @@ public class EditBoxSliderPanel extends JPanel {
         }
     }
 
-    // --- Helper Class for Input Validation ---
     static class IntegerFilter extends DocumentFilter {
         @Override
         public void insertString(FilterBypass fb, int offset, String string,

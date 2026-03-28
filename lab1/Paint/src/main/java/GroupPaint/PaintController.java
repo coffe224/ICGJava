@@ -1,10 +1,14 @@
 package GroupPaint;
 
 import GroupPaint.tools.FigureTool;
+import GroupPaint.tools.FillingTool;
 import GroupPaint.tools.LineTool;
 import GroupPaint.ui.dialogs.ColorSelector;
+import GroupPaint.ui.dialogs.HelpDialogMenu;
+import GroupPaint.ui.dialogs.tooldialogs.FigureParamatersSelector;
 import GroupPaint.ui.dialogs.tooldialogs.LineParametersSelector;
 
+import javax.swing.*;
 import java.awt.*;
 
 public class PaintController {
@@ -34,9 +38,13 @@ public class PaintController {
     }
 
     public void chooseFigure() {
-        // модальное окно
         System.out.println("Выбрана фигура");
-        FigureTool tool = new FigureTool(3, 10, 0, false);
+        FigureParamatersSelector figureDialog = new FigureParamatersSelector(mainFrame);
+        figureDialog.setVisible(true);
+        if (!figureDialog.isConfirmed()) {
+            return;
+        }
+        FigureTool tool = new FigureTool(figureDialog.getVertices(), figureDialog.getRadius(), figureDialog.getAngle(), false);
         paintModel.setTool(tool);
     }
 
@@ -73,7 +81,8 @@ public class PaintController {
 
     public void chooseFilling() {
         System.out.println("Выбрана заливка");
-
+        FillingTool fillingTool = new FillingTool();
+        paintModel.setTool(fillingTool);
         // создание инструмента заливка
     }
 
@@ -87,5 +96,10 @@ public class PaintController {
 
     public void addPoint(Point point) {
         paintModel.addPoint(point);
+    }
+
+    public void showHelp() {
+        HelpDialogMenu helpDialogMenu = new HelpDialogMenu((JFrame) mainFrame);
+        helpDialogMenu.setVisible(true);
     }
 }

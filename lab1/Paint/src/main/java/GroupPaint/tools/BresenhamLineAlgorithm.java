@@ -4,8 +4,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class BresenhamLineAlgorithm {
-
-    // Helper method to check if a point is within canvas bounds
     private boolean isInBounds(BufferedImage canvas, int x, int y) {
         return x >= 0 && x < canvas.getWidth() && y >= 0 && y < canvas.getHeight();
     }
@@ -22,12 +20,10 @@ public class BresenhamLineAlgorithm {
         int x = x0;
         int y = y0;
 
-        // Only draw starting point if it's in bounds
         if (isInBounds(canvas, x, y)) {
             canvas.setRGB(x, y, color);
         }
 
-        // Octant 1: shallow, up-right (dx >= dy, x1 >= x0, y1 >= y0)
         if (dx >= dy && x1 >= x0 && y1 >= y0) {
             int err = -dx;
             for (int i = 0; i < dx; ++i) {
@@ -42,7 +38,6 @@ public class BresenhamLineAlgorithm {
                 }
             }
         }
-        // Octant 2: steep, up-right (dx < dy, x1 >= x0, y1 >= y0)
         else if (dx < dy && x1 >= x0 && y1 >= y0) {
             int err = -dy;
             for (int i = 0; i < dy; ++i) {
@@ -57,7 +52,6 @@ public class BresenhamLineAlgorithm {
                 }
             }
         }
-        // Octant 3: steep, up-left (dx < dy, x1 < x0, y1 >= y0)
         else if (dx < dy && x1 < x0 && y1 >= y0) {
             int err = -dy;
             for (int i = 0; i < dy; ++i) {
@@ -72,7 +66,6 @@ public class BresenhamLineAlgorithm {
                 }
             }
         }
-        // Octant 4: shallow, up-left (dx >= dy, x1 < x0, y1 >= y0)
         else if (dx >= dy && x1 < x0 && y1 >= y0) {
             int err = -dx;
             for (int i = 0; i < dx; ++i) {
@@ -87,7 +80,6 @@ public class BresenhamLineAlgorithm {
                 }
             }
         }
-        // Octant 5: shallow, down-left (dx >= dy, x1 < x0, y1 < y0)
         else if (dx >= dy && x1 < x0 && y1 < y0) {
             int err = -dx;
             for (int i = 0; i < dx; ++i) {
@@ -102,7 +94,6 @@ public class BresenhamLineAlgorithm {
                 }
             }
         }
-        // Octant 6: steep, down-left (dx < dy, x1 < x0, y1 < y0)
         else if (dx < dy && x1 < x0 && y1 < y0) {
             int err = -dy;
             for (int i = 0; i < dy; ++i) {
@@ -117,7 +108,6 @@ public class BresenhamLineAlgorithm {
                 }
             }
         }
-        // Octant 7: steep, down-right (dx < dy, x1 >= x0, y1 < y0)
         else if (dx < dy && x1 >= x0 && y1 < y0) {
             int err = -dy;
             for (int i = 0; i < dy; ++i) {
@@ -132,7 +122,6 @@ public class BresenhamLineAlgorithm {
                 }
             }
         }
-        // Octant 8: shallow, down-right (dx >= dy, x1 >= x0, y1 < y0)
         else if (dx >= dy && x1 >= x0 && y1 < y0) {
             int err = -dx;
             for (int i = 0; i < dx; ++i) {

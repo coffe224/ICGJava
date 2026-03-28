@@ -31,7 +31,7 @@ public class ToolBar extends JToolBar {
 
         JButton fillingButton = new JButton("Заливка");
         fillingButton.setToolTipText("Залить область");
-        figureButton.addActionListener(
+        fillingButton.addActionListener(
                 e -> controller.chooseFilling()
         );
 

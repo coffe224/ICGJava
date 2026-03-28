@@ -25,7 +25,6 @@ public class MenuBar extends JMenuBar {
 
     private JMenu createFileMenu() {
         JMenu fileMenu = new JMenu("Файл");
-        fileMenu.setMnemonic('Ф'); // Горячая клавиша Alt+Ф
 
         JMenuItem openItem = new JMenuItem("Открыть");
         // контроллер опция открыть
@@ -38,6 +37,9 @@ public class MenuBar extends JMenuBar {
         JMenuItem exitItem = new JMenuItem("Выход");
         // выйти
         exitItem.setAccelerator(KeyStroke.getKeyStroke("ctrl Q"));
+        exitItem.addActionListener(
+                e -> System.exit(0)
+        );
 
         fileMenu.add(openItem);
         fileMenu.add(saveItem);
@@ -48,7 +50,6 @@ public class MenuBar extends JMenuBar {
 
     private JMenu createEditMenu() {
         JMenu editMenu = new JMenu("Правка");
-        editMenu.setMnemonic('П'); // Горячая клавиша Alt+П
 
         ButtonGroup toolGroup = new ButtonGroup();
 
@@ -59,7 +60,14 @@ public class MenuBar extends JMenuBar {
 
 
         JRadioButtonMenuItem figureItem = new JRadioButtonMenuItem("Фигура");
+        figureItem.addActionListener(
+                e -> controller.chooseFigure()
+        );
+
         JRadioButtonMenuItem fillingItem = new JRadioButtonMenuItem("Заливка");
+        fillingItem.addActionListener(
+                e -> controller.chooseFilling()
+        );
 
         toolGroup.add(lineItem);
         toolGroup.add(figureItem);
@@ -68,6 +76,9 @@ public class MenuBar extends JMenuBar {
 
 
         JMenuItem colorChoosingItem = new JMenuItem("Выбрать цвет");
+        colorChoosingItem.addActionListener(
+                e -> controller.chooseColor()
+        );
 
         JMenuItem emptyCanvasItem = new JMenuItem("Очистить область");
         emptyCanvasItem.addActionListener(
@@ -86,9 +97,11 @@ public class MenuBar extends JMenuBar {
 
     private JMenu createHelpMenu() {
         JMenu helpMenu = new JMenu("Справка");
-        helpMenu.setMnemonic('С'); // Горячая клавиша Alt+С
 
         JMenuItem aboutItem = new JMenuItem("О программе");
+        aboutItem.addActionListener(
+                e -> controller.showHelp()
+        );
 
         helpMenu.add(aboutItem);
         return helpMenu;
