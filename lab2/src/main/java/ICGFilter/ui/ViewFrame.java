@@ -1,4 +1,6 @@
 package ICGFilter.ui;
 
-public class ViewFrame {
+import javax.swing.*;
+
+public class ViewFrame extends JPanel {
 }

@@ -4,9 +4,7 @@ import java.awt.image.BufferedImage;
 
 public interface Filter {
     BufferedImage apply(BufferedImage image);
-    // добавить туда иконки (добавить дефолтную иконку)?
-    // сделать тулбар
 
-    // сделать мейн фрейм
-    // сделать меню бар
+    // подумать над архитектурой внутри для самих картинок (контроллер + модель)
+    // два разных BufferedImage - для самой картинки и для того что видно
 }

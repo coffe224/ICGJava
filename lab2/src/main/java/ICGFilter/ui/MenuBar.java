@@ -1,12 +1,12 @@
 package ICGFilter.ui;
 
-import ICGFilter.core.FilterWrapper;
+import ICGFilter.core.FilterInfo;
 
 import javax.swing.*;
 import java.util.List;
 
 public class MenuBar extends JMenuBar {
-    public MenuBar(List<FilterWrapper> filters) {
+    public MenuBar(List<FilterInfo> filters) {
         JMenu fileMenu = createFileMenu();
         JMenu filtersMenu = createFiltersMenu(filters);
         JMenu optionsMenu = createOptionsMenu();
@@ -40,11 +40,11 @@ public class MenuBar extends JMenuBar {
         return fileMenu;
     }
 
-    private JMenu createFiltersMenu(List<FilterWrapper> filters) {
+    private JMenu createFiltersMenu(List<FilterInfo> filters) {
         JMenu filtersMenu = new JMenu("Фильтры");
 
-        for (FilterWrapper filter : filters) {
-            JMenu filterItem = new JMenu(filter.getDescription());
+        for (FilterInfo filter : filters) {
+            JMenu filterItem = new JMenu(filter.description());
             filtersMenu.add(filterItem);
         }
 
