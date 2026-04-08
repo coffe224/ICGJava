@@ -5,25 +5,24 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class HelpDialog extends JDialog {
-    private JTextArea textArea;
-    private JButton okButton;
+public class HelpDialog {
 
-    public HelpDialog(JFrame parent) {
-        super(parent, "О программе", true); // Modal dialog
-        initialize();
+    public static void showDialog(JFrame parent) {
+        JDialog dialog = new JDialog(parent, "О программе", true); // Modal dialog
+        initializeDialog(dialog);
+        dialog.setVisible(true);
     }
 
-    private void initialize() {
-        setSize(400, 300);
-        setLocationRelativeTo(getOwner());
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setResizable(true);
+    private static void initializeDialog(JDialog dialog) {
+        dialog.setSize(400, 300);
+        dialog.setLocationRelativeTo(dialog.getOwner());
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        dialog.setResizable(true);
 
         JPanel mainPanel = new JPanel(new BorderLayout(10, 10));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
-        textArea = new JTextArea();
+        JTextArea textArea = new JTextArea();
         textArea.setEditable(false);
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
@@ -35,12 +34,12 @@ public class HelpDialog extends JDialog {
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        okButton = new JButton("OK");
+        JButton okButton = new JButton("OK");
         okButton.setPreferredSize(new Dimension(100, 35));
         okButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose();
+                dialog.dispose();
             }
         });
 
@@ -48,12 +47,11 @@ public class HelpDialog extends JDialog {
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
         buttonPanel.add(okButton);
 
-        add(mainPanel);
-
-        getRootPane().setDefaultButton(okButton);
+        dialog.add(mainPanel);
+        dialog.getRootPane().setDefaultButton(okButton);
     }
 
-    private String getProgramInfo() {
+    private static String getProgramInfo() {
         return "ICGFilter\n" +
                 "=============================================\n\n" +
                 "Версия: 1.0.0\n" +

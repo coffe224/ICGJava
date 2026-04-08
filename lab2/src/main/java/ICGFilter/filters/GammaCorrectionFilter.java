@@ -11,7 +11,7 @@ public class GammaCorrectionFilter implements FilterWithParameters {
     private static final float MAX_GAMMA = 10f;
     private static final float GAMMA_STEP = 0.1f;
 
-    private float gamma = 1f;
+    private float gamma = 0.2f;
 
 
     @Override
@@ -41,7 +41,7 @@ public class GammaCorrectionFilter implements FilterWithParameters {
             return null;
         }
 
-        BufferedImage newImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
+        BufferedImage newImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
 
         int[] inPixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
         int[] outPixels = ((DataBufferInt) newImage.getRaster().getDataBuffer()).getData();

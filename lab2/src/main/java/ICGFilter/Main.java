@@ -1,12 +1,10 @@
 package ICGFilter;
 
-import ICGFilter.core.Filter;
-import ICGFilter.core.FilterInfo;
-import ICGFilter.core.FilterManager;
+import ICGFilter.core.*;
 import ICGFilter.ui.MainFrame;
 import ICGFilter.ui.MenuBar;
 import ICGFilter.ui.ToolBar;
-import ICGFilter.ui.ViewFrame;
+import ICGFilter.ui.ViewPanel;
 
 import javax.swing.*;
 import java.util.List;
@@ -16,22 +14,28 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Hello world!");
 
-        FilterManager filterManager = new FilterManager();
-        Map<String, Filter> filters = filterManager.getFilters();
-        List<FilterInfo> filtersInfo = filterManager.getFiltersInfo();
+        // загрузка фильтров
+        FilterLoader filterLoader = new FilterLoader();
+        Map<String, Filter> filters = filterLoader.getFilters();
+        List<FilterInfo> filtersInfo = filterLoader.getFiltersInfo();
 
-        System.out.println(filters.size());
-        for (FilterInfo filterInfo : filtersInfo) {
-            System.out.println(filterInfo.name());
-            System.out.println(filterInfo.iconPath());
-            System.out.println(filterInfo.description() + "\n");
-        }
+        // работа с изображением
+        ImageView imageView = new ImageView();
+        ImageProcessor imageProcessor = new ImageProcessor();
+        ImageScaler imageScaler = new ImageScaler();
 
+        // фронтенд
         MenuBar menuBar = new MenuBar(filtersInfo);
         ToolBar toolBar = new ToolBar(filtersInfo);
-        ViewFrame viewFrame = new ViewFrame();
+        ViewPanel viewPanel = new ViewPanel(imageView);
 
-        MainFrame mainFrame = new MainFrame(menuBar, toolBar, viewFrame);
+
+        ImageManager imageManager = new ImageManager(imageProcessor, imageScaler, imageView, viewPanel);
+
+        MainFrame mainFrame = new MainFrame(menuBar, toolBar, viewPanel);
+
+        ApplicationController applicationController = new ApplicationController(filters, imageManager, mainFrame);
+
 
         SwingUtilities.invokeLater(() ->
                 mainFrame.setVisible(true)

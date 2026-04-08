@@ -1,5 +1,6 @@
 package ICGFilter.ui;
 
+import ICGFilter.core.ApplicationListener;
 import ICGFilter.core.FilterInfo;
 import ICGFilter.ui.components.ToolBarButton;
 
@@ -11,18 +12,23 @@ import java.util.List;
 public class ToolBar extends JToolBar {
     private static final int ICON_SIZE = 24;
 
+    private ApplicationListener applicationListener;
+
     public ToolBar(List<FilterInfo> filters) {
 
         ImageIcon openIcon = getResizedIcon("/icons/open.png");
         ToolBarButton openButton = new ToolBarButton(openIcon, ICON_SIZE);
         openButton.setToolTipText("Открыть");
-        // open
+        openButton.addActionListener(
+                e -> applicationListener.openImage()
+        );
 
         ImageIcon toggleViewIcon = getResizedIcon("/icons/toggle_view.png");
         ToolBarButton toggleViewButton = new ToolBarButton(toggleViewIcon, ICON_SIZE);
         toggleViewButton.setToolTipText("Сменить режим отображения");
-        // change view
-
+        toggleViewButton.addActionListener(
+                e -> applicationListener.toggleAdaptedView()
+        );
 
         add(openButton);
         addSeparator();
@@ -33,11 +39,16 @@ public class ToolBar extends JToolBar {
             ImageIcon filterIcon = getResizedIcon(filter.iconPath());
             ToolBarButton filterButton = new ToolBarButton(filterIcon, ICON_SIZE);
             filterButton.setToolTipText(filter.description());
-            // addActionListener for manager.applyFilter(filter.name());
+            filterButton.addActionListener(
+                    e -> applicationListener.applyFilter(filter.name())
+            );
             add(filterButton);
         }
     }
 
+    public void setListener(ApplicationListener listener) {
+        this.applicationListener = listener;
+    }
 
     private ImageIcon getResizedIcon(String iconPath) {
         // обработка нуля

@@ -12,7 +12,7 @@ public class GrayscaleFilter implements Filter {
             return null;
         }
 
-        BufferedImage newImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
+        BufferedImage newImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
 
         int[] inPixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
         int[] outPixels = ((DataBufferInt) newImage.getRaster().getDataBuffer()).getData();

@@ -6,11 +6,11 @@ import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-public class FilterManager {
+public class FilterLoader {
     List<FilterInfo> filtersInfo = new ArrayList<>();
     Map<String, Filter> filters = new HashMap<>();
 
-    public FilterManager() {
+    public FilterLoader() {
         loadFilters();
     }
 
