@@ -28,17 +28,23 @@ public class DrawingModel {
 
     public void addDrawable(Drawable drawable) {
         drawables.add(drawable);
+        fireChangeEvent();
     }
 
     public void removeDrawable(Drawable drawable) {
         drawables.remove(drawable);
+        fireChangeEvent();
     }
 
     public void clearDrawables() {
         drawables.clear();
+        fireChangeEvent();
     }
 
     private void fireChangeEvent() {
+        if (listener == null) {
+            return;
+        }
         PropertyChangeEvent evt = new PropertyChangeEvent(this, "drawable", null, null);
         listener.propertyChange(evt);
     }

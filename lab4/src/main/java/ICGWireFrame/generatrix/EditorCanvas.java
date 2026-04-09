@@ -19,7 +19,15 @@ public class EditorCanvas extends JPanel implements PropertyChangeListener {
         setBackground(Color.BLACK);
         setMouseListeners();
 
-        // TODO: implement listener for resize
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            @Override
+            public void componentResized(java.awt.event.ComponentEvent e) {
+                if (listener != null) {
+                    listener.handleResize(getWidth(), getHeight());
+                }
+            }
+        });
+
     }
 
     @Override

@@ -47,11 +47,15 @@ public class ViewTransform {
         Point2D worldBefore = screenToWorld(zoomCenterScreen);
         zoom *= factor;
         // Clamp zoom to reasonable range
-        zoom = Math.max(0.01, Math.min(1000, zoom));
+        zoom = Math.max(0.05, Math.min(10, zoom));
         Point2D worldAfter = screenToWorld(zoomCenterScreen);
 
-        panX += worldAfter.getX() - worldBefore.getX();
-        panY += worldAfter.getY() - worldBefore.getY();
+        panX -= worldAfter.getX() - worldBefore.getX();
+        panY -= worldAfter.getY() - worldBefore.getY();
+    }
+
+    public double getZoom() {
+        return zoom;
     }
 
     // Get visible world bounds
