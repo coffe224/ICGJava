@@ -8,11 +8,13 @@ public class Axis implements Drawable {
 
     @Override
     public void draw(Graphics2D g2d, ViewTransform transform) {
+        Dimension worldSize = transform.getWorldSize();
+
         Point2D origin = transform.worldToScreen(0, 0);
-        Point2D xPos = transform.worldToScreen(100, 0);
-        Point2D xNeg = transform.worldToScreen(-100, 0);
-        Point2D yPos = transform.worldToScreen(0, 100);
-        Point2D yNeg = transform.worldToScreen(0, -100);
+        Point2D xPos = transform.worldToScreen(worldSize.getWidth() / 2, 0);
+        Point2D xNeg = transform.worldToScreen(-worldSize.getWidth() / 2, 0);
+        Point2D yPos = transform.worldToScreen(0, worldSize.getHeight() / 2);
+        Point2D yNeg = transform.worldToScreen(0, -worldSize.getHeight() / 2);
 
         // X Axis (Red)
         g2d.setStroke(new BasicStroke(AXIS_THICKNESS));
@@ -24,24 +26,5 @@ public class Axis implements Drawable {
         g2d.setColor(Color.GREEN);
         g2d.drawLine((int)origin.getX(), (int)yNeg.getY(),
                 (int)origin.getX(), (int)yPos.getY());
-
-        // Labels (fixed font size)
-        drawLabels(g2d, transform);
-    }
-
-    private void drawLabels(Graphics2D g2d, ViewTransform transform) {
-        g2d.setColor(Color.WHITE);
-        Font original = g2d.getFont();
-        g2d.setFont(original.deriveFont(12f));
-
-        Point2D xLabel = transform.worldToScreen(105, -1);
-        Point2D yLabel = transform.worldToScreen(-1, 105);
-        Point2D originLabel = transform.worldToScreen(0.5, -0.5);
-
-        g2d.drawString("X", (int)xLabel.getX(), (int)xLabel.getY());
-        g2d.drawString("Y", (int)yLabel.getX(), (int)yLabel.getY());
-        g2d.drawString("(0,0)", (int)originLabel.getX(), (int)originLabel.getY());
-
-        g2d.setFont(original);
     }
 }

@@ -3,16 +3,20 @@ package ICGWireFrame.generatrix;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
+import java.awt.geom.Point2D;
 
 public class CanvasActionHandler implements CanvasActionListener {
     private final ViewTransform viewTransform;
     private final EditorCanvas canvas;
+    private final DrawingModel drawingModel;
     private Point lastMousePosition;
     private boolean isPanning = false;
+    private Interactable hovered = null;
 
-    public CanvasActionHandler(ViewTransform viewTransform, EditorCanvas canvas) {
+    public CanvasActionHandler(ViewTransform viewTransform, EditorCanvas canvas, DrawingModel drawingModel) {
         this.viewTransform = viewTransform;
         this.canvas = canvas;
+        this.drawingModel = drawingModel;
         this.lastMousePosition = new Point(0, 0);
     }
 
@@ -27,7 +31,40 @@ public class CanvasActionHandler implements CanvasActionListener {
             handleMouseReleased(event);
         } else if (event.getID() == MouseEvent.MOUSE_WHEEL) {
             handleMouseWheel(event);
+        } else if (event.getID() == MouseEvent.MOUSE_MOVED) {
+            handleMouseMoved(event);
         }
+    }
+
+    private void handleMouseMoved(MouseEvent e) {
+        Interactable interactable = getHoveredInteractable(e.getPoint());
+        if (interactable == hovered) {
+            return;
+        }
+
+        if (hovered != null) {
+            hovered.setHovered(false);
+        }
+        if (interactable != null) {
+            interactable.setHovered(true);
+        }
+        hovered = interactable;
+        System.out.println(interactable);
+        canvas.repaint();
+    }
+
+    private Interactable getHoveredInteractable(Point screenPosition) {
+        for (Interactable interactable : drawingModel.getInteractables()) {
+            Rectangle hitbox = interactable.getHitbox(viewTransform);
+            if (hitbox == null) {
+                System.out.println("Skipped");
+                continue;
+            }
+            if (hitbox.contains(screenPosition)) {
+                return interactable;
+            }
+        }
+        return null;
     }
 
     private void handleMousePressed(MouseEvent e) {
@@ -45,7 +82,12 @@ public class CanvasActionHandler implements CanvasActionListener {
             double deltaY = -(currentPoint.y - lastMousePosition.y) / viewTransform.getZoom();
 
             System.out.println(deltaX + " " + deltaY);
-            viewTransform.pan(-deltaX, -deltaY);
+
+            if (hovered != null) {
+                hovered.move(deltaX, deltaY);
+            } else {
+                viewTransform.pan(-deltaX, -deltaY);
+            }
 
             lastMousePosition = currentPoint;
             canvas.repaint();

@@ -62,6 +62,11 @@ public class EditorCanvas extends JPanel implements PropertyChangeListener {
             }
 
             @Override
+            public void mouseMoved(MouseEvent e) {
+                listener.handleAction(e);
+            }
+
+            @Override
             public void mouseWheelMoved(MouseWheelEvent e) {
                 listener.handleAction(e);
             }

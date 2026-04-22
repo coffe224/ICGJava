@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 
 public class ViewTransform {
+    private static final Dimension WORLD_SIZE = new Dimension(1000, 600);
+
     private double zoom;
     private double panX;
     private double panY;
@@ -22,7 +24,12 @@ public class ViewTransform {
 
     public void pan(double deltaX, double deltaY) {
         panX += deltaX;
+        panX = Math.min(panX, WORLD_SIZE.getWidth() / 2);
+        panX = Math.max(panX, -WORLD_SIZE.getWidth() / 2);
+
         panY += deltaY;
+        panY = Math.min(panY, WORLD_SIZE.getHeight() / 2);
+        panY = Math.max(panY, -WORLD_SIZE.getHeight() / 2);
     }
 
     public void reset() {
@@ -69,5 +76,9 @@ public class ViewTransform {
                 (int)Math.abs(bottomRight.getX() - topLeft.getX()),
                 (int)Math.abs(bottomRight.getY() - topLeft.getY())
         );
+    }
+
+    public Dimension getWorldSize() {
+        return WORLD_SIZE;
     }
 }
